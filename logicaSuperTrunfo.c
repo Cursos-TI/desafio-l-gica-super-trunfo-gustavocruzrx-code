@@ -1,43 +1,80 @@
 #include <stdio.h>
+#include <string.h>
 
-// Desafio Super Trunfo - Países
-// Tema 2 - Comparação das Cartas
-// Este código inicial serve como base para o desenvolvimento do sistema de comparação de cartas de cidades. 
-// Siga os comentários para implementar cada parte do desafio.
+// Estrutura que guarda as informações de cada carta
+struct Carta {
+    char estado[3];          // Ex: "BA"
+    char codigo[4];          // Ex: "A01"
+    char nomeCidade[50];
+    int populacao;
+float pib;
+    float area;
+    int pontosTuristicos;
+    float densidadePopulacional;
+    float pibPerCapita;
+};
+
+// Função que calcula propriedades derivadas
+void calcularPropriedades(struct Carta *c) {
+    if (c->area > 0)
+        c->densidadePopulacional = c->populacao / c->area;
+    else
+        c->densidadePopulacional = 0;
+
+    if (c->populacao > 0)
+        c->pibPerCapita = c->pib * 1000000000 / c->populacao; 
+    else
+        c->pibPerCapita = 0;
+}
+
+// Função para registrar uma carta
+void registrarCarta(struct Carta *c) {
+    printf("Digite o estado (ex: BA): ");
+    scanf("%2s", c->estado);
+
+    printf("Digite o código da carta (ex: A01): ");
+    scanf("%3s", c->codigo);
+
+    printf("Digite o nome da cidade: ");
+    scanf(" %[^\n]", c->nomeCidade);
+
+    printf("Digite a população: ");
+    scanf("%d", &c->populacao);
+
+    printf("Digite o PIB (em bilhões): ");
+    scanf("%f", &c->pib);
+
+    printf("Digite a área (em km²): ");
+    scanf("%f", &c->area);
+
+    printf("Digite o número de pontos turísticos: ");
+    scanf("%d", &c->pontosTuristicos);
+
+    // Calcula propriedades derivadas
+    calcularPropriedades(c);
+}
+
+// Função para exibir os dados da carta
+void mostrarCarta(struct Carta c) {
+    printf("\n===== CARTA REGISTRADA =====\n");
+    printf("Estado: %s\n", c.estado);
+    printf("Código: %s\n", c.codigo);
+    printf("Cidade: %s\n", c.nomeCidade);
+    printf("População: %d habitantes\n", c.populacao);
+    printf("PIB: %.2f bilhões\n", c.pib);
+    printf("Área: %.2f km²\n", c.area);
+    printf("Pontos Turísticos: %d\n", c.pontosTuristicos);
+    printf("Densidade Populacional: %.2f hab/km²\n", c.densidadePopulacional);
+    printf("PIB per Capita: %.2f R$/habitante\n", c.pibPerCapita);
+    printf("============================\n");
+}
 
 int main() {
-    // Definição das variáveis para armazenar as propriedades das cidades
-    // Você pode utilizar o código do primeiro desafio
+    struct Carta c1;
 
-    
-    // Cadastro das Cartas:
-    // Implemente a lógica para solicitar ao usuário que insira os dados das cidades
-    // utilizando a função scanf para capturar as entradas.
-    // utilize o código do primeiro desafio
-
-    // Exemplo:
-    // printf("Digite o código da cidade: ");
-    // scanf("%s", codigo);
-    // 
-    // (Repita para cada propriedade)
-
-    // Comparação de Cartas:
-    // Desenvolva a lógica de comparação entre duas cartas.
-    // Utilize estruturas de decisão como if, if-else para comparar atributos como população, área, PIB, etc.
-
-    // Exemplo:
-    // if (populacaoA > populacaoB) {
-    //     printf("Cidade 1 tem maior população.\n");
-    // } else {
-    //     printf("Cidade 2 tem maior população.\n");
-    // }
-
-    // Exibição dos Resultados:
-    // Após realizar as comparações, exiba os resultados para o usuário.
-    // Certifique-se de que o sistema mostre claramente qual carta venceu e com base em qual atributo.
-
-    // Exemplo:
-    // printf("A cidade vencedora é: %s\n", cidadeVencedora);
+    printf("=== Cadastro de Carta de Cidade ===\n");
+    registrarCarta(&c1);
+    mostrarCarta(c1);
 
     return 0;
 }
